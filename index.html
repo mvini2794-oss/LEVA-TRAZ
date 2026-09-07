@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEVA & TRAZ - Água & Gás</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --azul-escuro: #0A2540;
+            --azul-claro: #00D4FF;
+            --branco: #FFFFFF;
+            --cinza-fundo: #F4F6F9;
+            --cinza-borda: #E2E8F0;
+            --texto-dark: #1E293B;
+            --verde-sucesso: #00E676;
+            --amarelo-alerta: #FFB300;
+            --vermelho-erro: #FF5252;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--cinza-fundo);
+            color: var(--texto-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--azul-escuro);
+            color: var(--branco);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand i {
+            font-size: 24px;
+            color: var(--azul-claro);
+        }
+
+        .brand h1 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .brand span {
+            color: var(--azul-claro);
+        }
+
+        /* CONTAINER PRINCIPAL */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        /* TABS DE NAVEGAÇÃO PRINCIPAL */
+        .main-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--cinza-borda);
+        }
+
+        .tab-btn {
+            background: var(--branco);
+            border: 1px solid var(--cinza-borda);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--texto-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--azul-claro);
+            color: var(--azul-escuro);
+        }
+
+        .tab-btn.active {
+            border-color: var(--azul-escuro);
+            background-color: var(--azul-escuro);
+            color: var(--branco);
+            box-shadow: var(--shadow);
+        }
+
+        .tab-btn.active i {
+            color: var(--azul-claro);
+        }
+
+        /* VIEWS (CONTEÚDO DAS ABAS) */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* HEADER DE CADA ABA */
+        .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* CARDS E GRIDS */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--branco);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--azul-claro);
+        }
+
+        .stat-card.green { border-left-color: var(--verde-sucesso); }
+        .stat-card.yellow { border-left-color: var(--amarelo-alerta); }
+        .stat-card.dark { border-left-color: var(--azul-escuro); }
+
+        .stat-card h3 {
+            font-size: 12px;
+            color: #64748B;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .stat-card p {
+            font-size: 22px;
+            font-weight: 700;
+            margin-top: 5px;
+            color: var(--azul-escuro);
+        }
+
+        /* CARDS DE PEDIDO / ROTA */
+        .order-card {
+            background: var(--branco);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 18px;
+            margin-bottom: 15px;
+            border: 1px solid var(--cinza-borda);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #F1F5F9;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-pendente { background: #FEF3C7; color: #D97706; }
+        .status-em-rota { background: #E0F2FE; color: #0284C7; }
+        .status-entregue { background: #DCFCE7; color: #15803D; }
+
+        /* BOTÕES */
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .btn-icon {
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        .btn-primary { background: var(--azul-escuro); color: var(--branco); }
+        .btn-success { background: var(--verde-sucesso); color: var(--azul-escuro); font-weight: 700; }
+        .btn-gps { background: var(--azul-claro); color: var(--azul-escuro); font-weight: 700; }
+        .btn-secondary { background: #E2E8F0; color: var(--texto-dark); }
+        .btn-danger { background: #FEE2E2; color: #DC2626; }
+        .btn-danger:hover { background: #FCA5A5; }
+
+        /* TABELAS */
+        .table-responsive {
+            background: var(--branco);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--cinza-borda);
+        }
+
+        th {
+            background-color: #F8FAFC;
+            color: var(--azul-escuro);
+            font-weight: 600;
+        }
+
+        /* MAP MOCK CONTAINER */
+        .map-box {
+            width: 100%;
+            height: 220px;
+            background: #E2E8F0;
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            margin-bottom: 15px;
+            border: 2px dashed #CBD5E1;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top:0; left:0; right:0; bottom:0;
+            background: rgba(10, 37, 64, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: var(--branco);
+            width: 100%;
+            max-width: 500px;
+            border-radius: var(--radius);
+            padding: 24px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid var(--cinza-borda); border-radius: 8px; font-size: 13px; }
+        .form-row { display: flex; gap: 10px; }
+
+        .empty-state {
+            padding: 30px;
+            text-align: center;
+            color: #94A3B8;
+        }
+
+        @media print {
+            header, .main-tabs, .btn, .tab-actions { display: none !important; }
+            body { background: white; }
+            .container { max-width: 100%; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h1>LEVA & TRAZ <span>Água & Gás</span></h1>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- NAVEGAÇÃO POR ABAS EXPLICITAS -->
+        <nav class="main-tabs">
+            <button class="tab-btn active" onclick="switchTab('dashboard')"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
+            <button class="tab-btn" onclick="switchTab('entregas')"><i class="fa-solid fa-boxes-stacked"></i> Entregas</button>
+            <button class="tab-btn" onclick="switchTab('clientes')"><i class="fa-solid fa-users"></i> Clientes</button>
+            <button class="tab-btn" onclick="switchTab('entregadores')"><i class="fa-solid fa-id-card"></i> Entregadores</button>
+            <button class="tab-btn" onclick="switchTab('rotas')"><i class="fa-solid fa-map-location-dot"></i> Rotas (Maps)</button>
+            <button class="tab-btn" onclick="switchTab('galoes')"><i class="fa-solid fa-bottle-water"></i> Galões</button>
+            <button class="tab-btn" onclick="switchTab('relatorios')"><i class="fa-solid fa-file-invoice-dollar"></i> Relatórios</button>
+        </nav>
+
+        <!-- ABA 1: DASHBOARD -->
+        <div id="dashboard" class="tab-content active">
+            <div class="tab-header">
+                <h2>Visão Geral Operacional</h2>
+                <div class="tab-actions">
+                    <button class="btn btn-primary" onclick="abrirModalNovoPedido()"><i class="fa-solid fa-plus"></i> Novo Pedido</button>
+                </div>
+            </div>
+
+            <div class="card-grid">
+                <div class="stat-card">
+                    <h3>Entregas Concluídas</h3>
+                    <p id="dash-total-entregas">0</p>
+                </div>
+                <div class="stat-card green">
+                    <h3>Faturamento Realizado</h3>
+                    <p id="dash-faturamento">R$ 0,00</p>
+                </div>
+                <div class="stat-card yellow">
+                    <h3>Galões em Posse de Clientes</h3>
+                    <p id="dash-galoes-posse">0 Garrafões</p>
+                </div>
+                <div class="stat-card dark">
+                    <h3>Entregadores Ativos</h3>
+                    <p id="dash-entregadores-ativos">0</p>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 10px; font-size: 16px;">Pedidos Recentes</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th># ID</th>
+                            <th>Cliente</th>
+                            <th>Bairro</th>
+                            <th>Produto</th>
+                            <th>Status</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dash-tabela-recentes"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ABA 2: ENTREGAS -->
+        <div id="entregas" class="tab-content">
+            <div class="tab-header">
+                <h2>Controle de Entregas</h2>
+                <div class="tab-actions">
+                    <button class="btn btn-primary" onclick="abrirModalNovoPedido()"><i class="fa-solid fa-plus"></i> Criar Entrega</button>
+                </div>
+            </div>
+            <div id="lista-pedidos-cards"></div>
+        </div>
+
+        <!-- ABA 3: CLIENTES -->
+        <div id="clientes" class="tab-content">
+            <div class="tab-header">
+                <h2>Cadastro de Clientes</h2>
+                <div class="tab-actions">
+                    <button class="btn btn-primary" onclick="abrirModalNovoCliente()"><i class="fa-solid fa-user-plus"></i> Novo Cliente</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome Completo</th>
+                            <th>Telefone / WhatsApp</th>
+                            <th>Bairro</th>
+                            <th>Rua / Nº / Complemento</th>
+                            <th>Pontos de Referência</th>
+                            <th>Compras</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-clientes"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ABA 4: ENTREGADORES -->
+        <div id="entregadores" class="tab-content">
+            <div class="tab-header">
+                <h2>Controle de Entregadores</h2>
+                <div class="tab-actions">
+                    <button class="btn btn-primary" onclick="abrirModalNovoEntregador()"><i class="fa-solid fa-user-plus"></i> Novo Entregador</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Entregador</th>
+                            <th>Telefone / CNH</th>
+                            <th>Veículo</th>
+                            <th>Entregas Feitas</th>
+                            <th>Faturamento Gerado</th>
+                            <th>Comissão (10%)</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-entregadores"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ABA 5: ROTAS PARA ABRIR NO MAPS -->
+        <div id="rotas" class="tab-content">
+            <div class="tab-header">
+                <h2>Rotas Agrupadas por Bairro</h2>
+            </div>
+            
+            <div class="map-box">
+                <i class="fa-solid fa-map-location-dot" style="font-size: 40px; color: var(--azul-escuro); margin-bottom: 10px;"></i>
+                <p><strong id="rota-resumo-titulo">Circuito de Entregas Pendentes</strong></p>
+                <small id="rota-resumo-detalhe">0 Paradas Ativas</small>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button class="btn btn-gps" style="flex: 1;" onclick="abrirGoogleMapsCircuito()">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Rota Otimizada no Google Maps
+                </button>
+                <button class="btn btn-secondary" style="flex: 1;" onclick="abrirWaze()">
+                    <i class="fa-solid fa-navigation"></i> Abrir no Waze
+                </button>
+            </div>
+
+            <h3 style="margin-bottom: 10px; font-size: 15px;">Sequência das Paradas Pendentes:</h3>
+            <div id="lista-paradas-rotas"></div>
+        </div>
+
+        <!-- ABA 6: GALÕES -->
+        <div id="galoes" class="tab-content">
+            <div class="tab-header">
+                <h2>Controle de Galões & Vasilhames</h2>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Bairro</th>
+                            <th>Marca da Água</th>
+                            <th>Qtd. Entregue</th>
+                            <th>Qtd. Retornada</th>
+                            <th>Saldo em Posse</th>
+                            <th>Ano Garrafão Retornado</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-galoes"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ABA 7: RELATÓRIOS -->
+        <div id="relatorios" class="tab-content">
+            <div class="tab-header">
+                <h2>Relatórios Financeiros e Operacionais</h2>
+                <div class="tab-actions">
+                    <button class="btn btn-secondary" onclick="alert('Exportando dados para relatórios...')"><i class="fa-solid fa-file-excel"></i> Excel</button>
+                    <button class="btn btn-primary" onclick="window.print()"><i class="fa-solid fa-print"></i> PDF / Imprimir</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Entregador</th>
+                            <th>Cliente</th>
+                            <th>Bairro</th>
+                            <th>Produto</th>
+                            <th>Pagamento</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-relatorios"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL CONFIRMAR ENTREGA -->
+    <div id="modal-confirmar" class="modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3>Confirmar Entrega #<span id="modal-order-id"></span></h3>
+                <i class="fa-solid fa-xmark" onclick="fecharModal()" style="cursor:pointer; font-size:18px;"></i>
+            </div>
+            <form onsubmit="confirmarEntrega(event)">
+                <input type="hidden" id="modal-order-index">
+                
+                <div class="form-group">
+                    <label>Forma de Pagamento Recebida:</label>
+                    <select class="form-control" id="modal-pagamento">
+                        <option value="Pix">Pix</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="Cartão Débito">Cartão Débito</option>
+                        <option value="Cartão Crédito">Cartão Crédito</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label>Galões Entregues:</label>
+                        <input type="number" class="form-control" id="modal-entregue" value="1" min="0">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Ano Garrafão Entregue:</label>
+                        <input type="number" class="form-control" id="modal-ano-entregue" value="2026">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label>Galões Recolhidos:</label>
+                        <input type="number" class="form-control" id="modal-retornado" value="1" min="0">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Ano Garrafão Recolhido:</label>
+                        <input type="number" class="form-control" id="modal-ano-retornado" value="2023">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Marca do Vasilhame:</label>
+                    <select class="form-control" id="modal-marca">
+                        <option value="Indaiá">Indaiá</option>
+                        <option value="Minalba">Minalba</option>
+                        <option value="Crystal">Crystal</option>
+                        <option value="Santa Joana">Santa Joana</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success" style="width:100%; margin-top:10px;">
+                    <i class="fa-solid fa-check-circle"></i> Confirmar e Dar Baixa
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL NOVO PEDIDO -->
+    <div id="modal-novo-pedido" class="modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3>Registrar Novo Pedido</h3>
+                <i class="fa-solid fa-xmark" onclick="fecharModal()" style="cursor:pointer; font-size:18px;"></i>
+            </div>
+            <form onsubmit="salvarNovoPedido(event)">
+                <div class="form-group">
+                    <label>Cliente:</label>
+                    <input type="text" class="form-control" id="novo-cliente" list="clientes-list" onchange="autoPreencherCliente()" required placeholder="Nome do cliente">
+                    <datalist id="clientes-list"></datalist>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label>Bairro:</label>
+                        <input type="text" class="form-control" id="novo-bairro" required placeholder="Bairro">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Rua e Número:</label>
+                        <input type="text" class="form-control" id="novo-rua" required placeholder="Rua, Nº">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label>Produto:</label>
+                        <select class="form-control" id="novo-produto">
+                            <option value="Galão Água 20L">Galão Água 20L</option>
+                            <option value="Botijão Gás P13">Botijão Gás P13</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Valor (R$):</label>
+                        <input type="number" step="0.01" class="form-control" id="novo-valor" value="14.00" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Entregador:</label>
+                    <select class="form-control" id="novo-entregador"></select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">Lançar Pedido</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL NOVO CLIENTE -->
+    <div id="modal-novo-cliente" class="modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3>Cadastrar Novo Cliente</h3>
+                <i class="fa-solid fa-xmark" onclick="fecharModal()" style="cursor:pointer; font-size:18px;"></i>
+            </div>
+            <form onsubmit="salvarNovoCliente(event)">
+                <div class="form-group">
+                    <label>Nome Completo:</label>
+                    <input type="text" class="form-control" id="cliente-nome" required placeholder="Nome do cliente">
+                </div>
+                <div class="form-group">
+                    <label>Telefone / WhatsApp:</label>
+                    <input type="text" class="form-control" id="cliente-fone" required placeholder="(81) 90000-0000">
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label>Bairro:</label>
+                        <input type="text" class="form-control" id="cliente-bairro" required placeholder="Bairro">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Rua e Nº:</label>
+                        <input type="text" class="form-control" id="cliente-rua" required placeholder="Rua, Nº, Apt">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ponto de Referência:</label>
+                    <input type="text" class="form-control" id="cliente-ref" placeholder="Próximo ao comércio...">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">Salvar Cliente</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL NOVO ENTREGADOR -->
+    <div id="modal-novo-entregador" class="modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3>Cadastrar Novo Entregador</h3>
+                <i class="fa-solid fa-xmark" onclick="fecharModal()" style="cursor:pointer; font-size:18px;"></i>
+            </div>
+            <form onsubmit="salvarNovoEntregador(event)">
+                <div class="form-group">
+                    <label>Nome Completo:</label>
+                    <input type="text" class="form-control" id="entregador-nome" required placeholder="Nome do entregador">
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex:1;">
+                        <label>Telefone:</label>
+                        <input type="text" class="form-control" id="entregador-fone" required placeholder="(81) 90000-0000">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label>CNH:</label>
+                        <input type="text" class="form-control" id="entregador-cnh" required placeholder="Nº CNH">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Veículo (Placa/Modelo):</label>
+                    <input type="text" class="form-control" id="entregador-veiculo" required placeholder="Ex: Moto CG 160 (ABC-1234)">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">Salvar Entregador</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let proximoIdPedido = 204;
+
+        let state = {
+            pedidos: [
+                { id: 201, cliente: "Carlos Eduardo", bairro: "Centro", rua: "Rua das Flores, 142", produto: "Galão Água 20L", valor: 14.00, status: "Em rota", entregador: "Roberto Silva", pagamento: "Pix", galoes: { entregue: 1, retornado: 1, marca: "Indaiá", anoRetornado: 2023 }, data: "07/09/2026" },
+                { id: 202, cliente: "Fernanda Costa", bairro: "Jardim América", rua: "Av. Brasil, 89", produto: "Botijão Gás P13", valor: 110.00, status: "Pendente", entregador: "Lucas Oliveira", pagamento: "Dinheiro", galoes: { entregue: 0, retornado: 0, marca: "N/A", anoRetornado: "-" }, data: "07/09/2026" },
+                { id: 203, cliente: "Mercado do Povo", bairro: "Centro", rua: "Rua Comércio, 45", produto: "Galão Água 20L", valor: 56.00, status: "Entregue", entregador: "Roberto Silva", pagamento: "Pix", galoes: { entregue: 4, retornado: 2, marca: "Minalba", anoRetornado: 2024 }, data: "07/09/2026" }
+            ],
+            clientes: [
+                { nome: "Carlos Eduardo", telefone: "(81) 99887-6655", bairro: "Centro", rua: "Rua das Flores, 142", ref: "Próximo à farmácia", compras: 8 },
+                { nome: "Fernanda Costa", telefone: "(81) 98765-4321", bairro: "Jardim América", rua: "Av. Brasil, 89", ref: "Casa verde", compras: 3 },
+                { nome: "Mercado do Povo", telefone: "(81) 3421-0099", bairro: "Centro", rua: "Rua Comércio, 45", ref: "Em frente à praça", compras: 24 }
+            ],
+            entregadores: [
+                { nome: "Roberto Silva", fone: "(81) 99111-2233", cnh: "049382019", veiculo: "Moto Cargo (ABC-1234)", entregas: 1, faturamento: 56.00 },
+                { nome: "Lucas Oliveira", fone: "(81) 98822-3344", cnh: "092830192", veiculo: "Fiorino (XYZ-9876)", entregas: 0, faturamento: 0.00 }
+            ]
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            atualizarSelectEntregadores();
+            atualizarDatalistClientes();
+            renderAll();
+        });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if(activeBtn) activeBtn.classList.add('active');
+
+            const content = document.getElementById(tabId);
+            if(content) content.classList.add('active');
+        }
+
+        function renderAll() {
+            renderDashboard();
+            renderEntregas();
+            renderClientes();
+            renderEntregadores();
+            renderRotas();
+            renderGaloes();
+            renderRelatorios();
+        }
+
+        function renderDashboard() {
+            const entregues = state.pedidos.filter(p => p.status === 'Entregue');
+            const totalFat = entregues.reduce((acc, p) => acc + p.valor, 0);
+
+            let totalGaloesPosse = 0;
+            state.pedidos.forEach(p => {
+                if(p.galoes && p.galoes.entregue) {
+                    totalGaloesPosse += (p.galoes.entregue - p.galoes.retornado);
+                }
+            });
+
+            document.getElementById('dash-total-entregas').innerText = entregues.length;
+            document.getElementById('dash-faturamento').innerText = `R$ ${totalFat.toFixed(2)}`;
+            document.getElementById('dash-galoes-posse').innerText = `${totalGaloesPosse} Garrafões`;
+            document.getElementById('dash-entregadores-ativos').innerText = state.entregadores.length;
+
+            const tbody = document.getElementById('dash-tabela-recentes');
+            tbody.innerHTML = '';
+
+            if (state.pedidos.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhum pedido registrado no momento.</td></tr>`;
+                return;
+            }
+
+            state.pedidos.slice(-5).reverse().forEach(p => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>#${p.id}</td>
+                    <td><strong>${p.cliente}</strong></td>
+                    <td>${p.bairro}</td>
+                    <td>${p.produto}</td>
+                    <td><span class="status-badge ${p.status === 'Entregue' ? 'status-entregue' : (p.status === 'Em rota' ? 'status-em-rota' : 'status-pendente')}">${p.status}</span></td>
+                    <td>R$ ${p.valor.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-danger btn-icon" onclick="excluirPedidoPorId(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderEntregas() {
+            const container = document.getElementById('lista-pedidos-cards');
+            container.innerHTML = '';
+
+            if (state.pedidos.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i class="fa-solid fa-box-open" style="font-size:32px; margin-bottom:10px;"></i><p>Nenhuma entrega cadastrada.</p></div>`;
+                return;
+            }
+
+            state.pedidos.forEach((p, idx) => {
+                let card = document.createElement('div');
+                card.className = 'order-card';
+                card.innerHTML = `
+                    <div class="order-header">
+                        <strong>Pedido #${p.id} - ${p.cliente}</strong>
+                        <span class="status-badge ${p.status === 'Entregue' ? 'status-entregue' : (p.status === 'Em rota' ? 'status-em-rota' : 'status-pendente')}">${p.status}</span>
+                    </div>
+                    <p style="font-size:13px;"><i class="fa-solid fa-location-dot"></i> ${p.rua} (${p.bairro})</p>
+                    <p style="font-size:13px;"><i class="fa-solid fa-box"></i> ${p.produto} - <strong>R$ ${p.valor.toFixed(2)}</strong></p>
+                    <p style="font-size:13px;"><i class="fa-solid fa-user"></i> Entregador: ${p.entregador || 'Não Atribuído'}</p>
+                    <div style="margin-top:10px; display:flex; gap:8px;">
+                        <button class="btn btn-gps" onclick="abrirGoogleMaps('${p.rua}, ${p.bairro}')"><i class="fa-solid fa-location-arrow"></i> Maps</button>
+                        ${p.status !== 'Entregue' ? `<button class="btn btn-success" onclick="abrirModalConfirmar(${idx})"><i class="fa-solid fa-check"></i> Dar Baixa</button>` : ''}
+                        <button class="btn btn-danger" onclick="excluirPedido(${idx})"><i class="fa-solid fa-trash"></i> Excluir</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderClientes() {
+            const tbody = document.getElementById('tabela-clientes');
+            tbody.innerHTML = '';
+
+            if (state.clientes.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhum cliente cadastrado.</td></tr>`;
+                return;
+            }
+
+            state.clientes.forEach((c, idx) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${c.nome}</strong></td>
+                    <td>${c.telefone}</td>
+                    <td>${c.bairro}</td>
+                    <td>${c.rua}</td>
+                    <td>${c.ref || 'N/A'}</td>
+                    <td>${c.compras || 0} pedidos</td>
+                    <td>
+                        <button class="btn btn-danger btn-icon" onclick="excluirCliente(${idx})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderEntregadores() {
+            const tbody = document.getElementById('tabela-entregadores');
+            tbody.innerHTML = '';
+
+            if (state.entregadores.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhum entregador cadastrado.</td></tr>`;
+                return;
+            }
+
+            state.entregadores.forEach((e, idx) => {
+                let tr = document.createElement('tr');
+                let comissao = e.faturamento * 0.10;
+                tr.innerHTML = `
+                    <td><strong>${e.nome}</strong></td>
+                    <td>${e.fone} <br><small>CNH: ${e.cnh}</small></td>
+                    <td>${e.veiculo}</td>
+                    <td>${e.entregas}</td>
+                    <td>R$ ${e.faturamento.toFixed(2)}</td>
+                    <td style="color:var(--verde-sucesso); font-weight:bold;">R$ ${comissao.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-danger btn-icon" onclick="excluirEntregador(${idx})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderRotas() {
+            const container = document.getElementById('lista-paradas-rotas');
+            container.innerHTML = '';
+
+            const pendentes = state.pedidos.filter(p => p.status !== 'Entregue');
+            document.getElementById('rota-resumo-detalhe').innerText = `${pendentes.length} Paradas Pendentes`;
+
+            if (pendentes.length === 0) {
+                container.innerHTML = `<div class="empty-state"><p>Todas as entregas já foram concluídas!</p></div>`;
+                return;
+            }
+
+            pendentes.forEach((p, idx) => {
+                let div = document.createElement('div');
+                div.className = 'order-card';
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong>Parada #${idx + 1}: ${p.cliente}</strong>
+                        <button class="btn btn-danger btn-icon" onclick="excluirPedidoPorId(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <p style="font-size:13px;"><i class="fa-solid fa-map-pin"></i> ${p.rua} - ${p.bairro}</p>
+                    <small>Item: ${p.produto} | Forma de Pgto: ${p.pagamento}</small>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderGaloes() {
+            const tbody = document.getElementById('tabela-galoes');
+            tbody.innerHTML = '';
+
+            const pedidosGaloes = state.pedidos.filter(p => p.galoes && p.galoes.entregue > 0);
+
+            if (pedidosGaloes.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="empty-state">Nenhuma movimentação de galões registrada.</td></tr>`;
+                return;
+            }
+
+            pedidosGaloes.forEach((p) => {
+                let saldo = p.galoes.entregue - p.galoes.retornado;
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${p.cliente}</strong></td>
+                    <td>${p.bairro}</td>
+                    <td>${p.galoes.marca}</td>
+                    <td>${p.galoes.entregue}</td>
+                    <td>${p.galoes.retornado}</td>
+                    <td><span style="font-weight:bold; color:${saldo > 0 ? '#DC2626' : '#16A34A'}">${saldo} em posse</span></td>
+                    <td>${p.galoes.anoRetornado}</td>
+                    <td>
+                        <button class="btn btn-danger btn-icon" onclick="removerGalaoPedido(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderRelatorios() {
+            const tbody = document.getElementById('tabela-relatorios');
+            tbody.innerHTML = '';
+
+            if (state.pedidos.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="empty-state">Sem dados para relatório no momento.</td></tr>`;
+                return;
+            }
+
+            state.pedidos.forEach(p => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${p.data || '07/09/2026'}</td>
+                    <td>${p.entregador || 'N/A'}</td>
+                    <td>${p.cliente}</td>
+                    <td>${p.bairro}</td>
+                    <td>${p.produto}</td>
+                    <td>${p.pagamento}</td>
+                    <td>R$ ${p.valor.toFixed(2)}</td>
+                    <td><strong>${p.status}</strong></td>
+                    <td>
+                        <button class="btn btn-danger btn-icon" onclick="excluirPedidoPorId(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // EXCLUSÃO INDIVIDUAL POR ITEM
+        function excluirPedido(index) {
+            if (confirm("Tem certeza que deseja excluir este pedido?")) {
+                state.pedidos.splice(index, 1);
+                renderAll();
+            }
+        }
+
+        function excluirPedidoPorId(id) {
+            if (confirm("Tem certeza que deseja excluir este pedido?")) {
+                state.pedidos = state.pedidos.filter(p => p.id !== id);
+                renderAll();
+            }
+        }
+
+        function excluirCliente(index) {
+            if (confirm("Tem certeza que deseja excluir este cliente?")) {
+                state.clientes.splice(index, 1);
+                atualizarDatalistClientes();
+                renderAll();
+            }
+        }
+
+        function excluirEntregador(index) {
+            if (confirm("Tem certeza que deseja excluir este entregador?")) {
+                state.entregadores.splice(index, 1);
+                atualizarSelectEntregadores();
+                renderAll();
+            }
+        }
+
+        function removerGalaoPedido(id) {
+            if (confirm("Deseja remover o registro deste galão do histórico?")) {
+                const p = state.pedidos.find(item => item.id === id);
+                if(p) {
+                    p.galoes = { entregue: 0, retornado: 0, marca: "N/A", anoRetornado: "-" };
+                }
+                renderAll();
+            }
+        }
+
+        // MAPS & NAVEGAÇÃO
+        function abrirGoogleMaps(endereco) {
+            window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`, '_blank');
+        }
+
+        function abrirGoogleMapsCircuito() {
+            const enderecos = state.pedidos.filter(p => p.status !== 'Entregue').map(p => encodeURIComponent(`${p.rua}, ${p.bairro}`));
+            if(enderecos.length > 0) {
+                window.open(`https://www.google.com/maps/dir/${enderecos.join('/')}`, '_blank');
+            } else {
+                alert('Não há rotas pendentes no momento.');
+            }
+        }
+
+        function abrirWaze() {
+            const pendente = state.pedidos.find(p => p.status !== 'Entregue');
+            if(pendente) {
+                window.open(`https://waze.com/ul?q=${encodeURIComponent(pendente.rua + ', ' + pendente.bairro)}`, '_blank');
+            } else {
+                window.open(`https://waze.com/ul`, '_blank');
+            }
+        }
+
+        function atualizarDatalistClientes() {
+            const list = document.getElementById('clientes-list');
+            if(list) {
+                list.innerHTML = '';
+                state.clientes.forEach(c => {
+                    let opt = document.createElement('option');
+                    opt.value = c.nome;
+                    list.appendChild(opt);
+                });
+            }
+        }
+
+        function autoPreencherCliente() {
+            const nomeDigitado = document.getElementById('novo-cliente').value;
+            const clienteEncontrado = state.clientes.find(c => c.nome.toLowerCase() === nomeDigitado.toLowerCase());
+            if (clienteEncontrado) {
+                document.getElementById('novo-bairro').value = clienteEncontrado.bairro;
+                document.getElementById('novo-rua').value = clienteEncontrado.rua;
+            }
+        }
+
+        function atualizarSelectEntregadores() {
+            const select = document.getElementById('novo-entregador');
+            if(select) {
+                select.innerHTML = '';
+                state.entregadores.forEach(e => {
+                    let opt = document.createElement('option');
+                    opt.value = e.nome;
+                    opt.innerText = e.nome;
+                    select.appendChild(opt);
+                });
+            }
+        }
+
+        // MODAIS CONTROLE
+        function abrirModalConfirmar(index) {
+            document.getElementById('modal-order-id').innerText = state.pedidos[index].id;
+            document.getElementById('modal-order-index').value = index;
+            document.getElementById('modal-confirmar').classList.add('active');
+        }
+
+        function abrirModalNovoPedido() {
+            document.getElementById('modal-novo-pedido').classList.add('active');
+        }
+
+        function abrirModalNovoCliente() {
+            document.getElementById('modal-novo-cliente').classList.add('active');
+        }
+
+        function abrirModalNovoEntregador() {
+            document.getElementById('modal-novo-entregador').classList.add('active');
+        }
+
+        function fecharModal() {
+            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+        }
+
+        // AÇÕES DE FORMULÁRIO
+        function confirmarEntrega(e) {
+            e.preventDefault();
+            const idx = document.getElementById('modal-order-index').value;
+            const pedido = state.pedidos[idx];
+            
+            if (pedido) {
+                pedido.status = 'Entregue';
+                pedido.pagamento = document.getElementById('modal-pagamento').value;
+                pedido.galoes = {
+                    entregue: parseInt(document.getElementById('modal-entregue').value) || 0,
+                    retornado: parseInt(document.getElementById('modal-retornado').value) || 0,
+                    marca: document.getElementById('modal-marca').value,
+                    anoRetornado: document.getElementById('modal-ano-retornado').value
+                };
+
+                const entregadorObj = state.entregadores.find(ent => ent.nome === pedido.entregador);
+                if (entregadorObj) {
+                    entregadorObj.entregas += 1;
+                    entregadorObj.faturamento += pedido.valor;
+                }
+
+                const clienteObj = state.clientes.find(cli => cli.nome === pedido.cliente);
+                if (clienteObj) {
+                    clienteObj.compras = (clienteObj.compras || 0) + 1;
+                }
+            }
+
+            fecharModal();
+            renderAll();
+        }
+
+        function salvarNovoPedido(e) {
+            e.preventDefault();
+            const novo = {
+                id: proximoIdPedido++,
+                cliente: document.getElementById('novo-cliente').value,
+                bairro: document.getElementById('novo-bairro').value,
+                rua: document.getElementById('novo-rua').value,
+                produto: document.getElementById('novo-produto').value,
+                valor: parseFloat(document.getElementById('novo-valor').value),
+                status: 'Pendente',
+                entregador: document.getElementById('novo-entregador').value,
+                pagamento: 'Pendente',
+                galoes: { entregue: 0, retornado: 0, marca: 'N/A', anoRetornado: '-' },
+                data: '07/09/2026'
+            };
+
+            state.pedidos.push(novo);
+
+            const clienteExiste = state.clientes.some(c => c.nome.toLowerCase() === novo.cliente.toLowerCase());
+            if (!clienteExiste) {
+                state.clientes.push({
+                    nome: novo.cliente,
+                    telefone: "(81) não informado",
+                    bairro: novo.bairro,
+                    rua: novo.rua,
+                    ref: "Cadastrado via Pedido",
+                    compras: 0
+                });
+                atualizarDatalistClientes();
+            }
+
+            fecharModal();
+            renderAll();
+            e.target.reset();
+        }
+
+        function salvarNovoCliente(e) {
+            e.preventDefault();
+            const novo = {
+                nome: document.getElementById('cliente-nome').value,
+                telefone: document.getElementById('cliente-fone').value,
+                bairro: document.getElementById('cliente-bairro').value,
+                rua: document.getElementById('cliente-rua').value,
+                ref: document.getElementById('cliente-ref').value || 'N/A',
+                compras: 0
+            };
+            state.clientes.push(novo);
+            atualizarDatalistClientes();
+            fecharModal();
+            renderAll();
+            e.target.reset();
+        }
+
+        function salvarNovoEntregador(e) {
+            e.preventDefault();
+            const novo = {
+                nome: document.getElementById('entregador-nome').value,
+                fone: document.getElementById('entregador-fone').value,
+                cnh: document.getElementById('entregador-cnh').value,
+                veiculo: document.getElementById('entregador-veiculo').value,
+                entregas: 0,
+                faturamento: 0.00
+            };
+            state.entregadores.push(novo);
+            atualizarSelectEntregadores();
+            fecharModal();
+            renderAll();
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
